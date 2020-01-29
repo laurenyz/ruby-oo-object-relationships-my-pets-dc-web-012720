@@ -1,3 +1,8 @@
+require_relative './dog.rb'
+require_relative './cat.rb'
+
+require 'pry'
+
 class Owner
   attr_reader :name, :species
   @@owners = []
@@ -12,17 +17,6 @@ class Owner
     "I am a #{@species}."
   end
 
-  #owner can buy cat
-  def buy_cat(name)
-  end
-
-  #owner can buy dog
-  def buy_dog(name)
-  end
-
-  def get_cat
-  end
-
   def self.all
     @@owners
   end
@@ -35,10 +29,52 @@ class Owner
     @@owners = []
   end
 
+  #! expect(@owner.cats[0]).to eq(cat_1)
   def cats
+    Cat.all.select{ |cat|
+      cat.owner == self
+    }
+  end
+
+  def dogs
+    Dog.all.select{ |dog|
+      dog.owner == self
+    }
+  end
+
+  #owner can buy cat
+  def buy_cat(name)
+    Cat.new(name, self)
+  end
+
+  #owner can buy dog
+  def buy_dog(name)
+    Dog.new(name, self)
+  end
+
+  def walk_dogs
+
+    self.dogs.map{ |dog|
+      dog.mood="happy"
+    }
+
+  end
+  def feed_cats
+
+    self.cats.map{ |cat|
+      cat.mood="happy"
+    }
     
   end
+
 
 end
 
 #owner.name = name
+
+# Hermione = Owner.new("Hermione")
+# Cat.new("Crooks", Hermione)
+# Cat.new("Crookshanks", Hermione)
+# Cat.new("Shanks", Hermione)
+
+
