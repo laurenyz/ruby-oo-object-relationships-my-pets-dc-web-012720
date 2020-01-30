@@ -21,12 +21,14 @@ class Owner
     @@owners
   end
 
-  def self.count
-    @@owners.length
+  def self.count #make it depend on another method instead of repeating a variable - less breakable
+    self.all.length
+    # @@owners.length
   end
 
-  def self.reset_all
-    @@owners = []
+  def self.reset_all #make it depend on another method
+    self.all.clear
+    # @@owners = []
   end
 
   #! expect(@owner.cats[0]).to eq(cat_1)
@@ -54,27 +56,22 @@ class Owner
 
   def walk_dogs
 
-    self.dogs.map{ |dog|
-      dog.mood="happy"
-    }
+    self.dogs.map {|dog| dog.mood="happy"}
 
   end
+ 
   def feed_cats
 
-    self.cats.map{ |cat|
-      cat.mood="happy"
-    }
+    self.cats.map {|cat| cat.mood="happy"}
     
   end
 
-  def sell_pets
-    self.cats.map{ |cat| 
-      cat.mood="nervous"
-      cat.owner= nil
-    }
-    self.dogs.map{ |dog| 
-      dog.mood="nervous"
-      dog.owner= nil
+  def sell_pets   #can make an array of cats & dogs to avoid repetition
+    pets = self.cats + self.dogs
+    
+    pets.map{ |pet| 
+      pet.mood="nervous"
+      pet.owner= nil
     }
   end
 
@@ -84,11 +81,13 @@ class Owner
 
 end
 
-#owner.name = name
+# owner.name = name
 
 # Hermione = Owner.new("Hermione")
 # Cat.new("Crooks", Hermione)
 # Cat.new("Crookshanks", Hermione)
 # Cat.new("Shanks", Hermione)
+
+# p Hermione.feed_cats
 
 
